@@ -6,21 +6,20 @@ def findPairCount(start, item, str):
         if item == str[i]: count += 1
         i += 1
         
-    start += 1
     return count
 
 str = input("Enter numbers string: ")
 
-start = 1
+start = 0
 
-myDict = { str[0] : findPairCount(start,str[0],str) + 1}
+myDict = dict()
 
 for item in str:
     if item in myDict:
        start += 1
        continue
 
-    myDict[item] = findPairCount(start,item,str) + 1
+    myDict[item] = findPairCount(start,item,str)
 
 for i in myDict:
-    print(i + "  " + myDict[i])
+    print(i, "  " , myDict[i])

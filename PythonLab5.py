@@ -19,8 +19,8 @@ def showDictionary(dictToShow,*,keyName = '', startAttrFrom = 0, attributes = li
                 print(attr, end = '\t')
         else:
             print(keyName + ' ' + i + '\t', end = '\t')
-            for attrInd in range(startAttrFrom, len(attributes)):
-                print(attributes[attrInd] + ':\t' + str(dictToShow[i][attrInd]),end='\t')
+            for attrInd in range(len(attributes)):
+                print(attributes[attrInd] + ':\t' + str(dictToShow[i][startAttrFrom + attrInd]),end='\t')
             print(' ')
 
 def makeOrder(*, dicktionary = dict()):
@@ -30,7 +30,7 @@ def makeOrder(*, dicktionary = dict()):
     itemCount = int(input("Enter the item count: "))
     return [itemID, itemCount]
 
-def makePrikol(item, checkout,email = 'thomascharester@gmail.com'):
+def makePrikol(item, checkout,email):
     import smtplib
     from email.mime.text import MIMEText
 
@@ -46,14 +46,15 @@ def makePrikol(item, checkout,email = 'thomascharester@gmail.com'):
         server.login("tomascharester@gmail.com", "uycw bykr mwvj peks")
         server.sendmail(sender, receiver, msg.as_string())
 
-email = 'thomascharrester@gmail.com'
+email = 'thomascharester@gmail.com'
 
-mainMenu = ["Free V-Bucks","Price list", "Count list", "All info", "Make order", "Exit"]
+mainMenu = ["Free V-Bucks","Price list", "Count list", "All info", "Make order", "See check out", "Exit"]
 dicktionary = {"FreddyPlushe" : [10,35],"BonniePlushe" : [9,30],"ChicaPlushe" : [10,90], "FoxyPlushe" : [11,50] }
 
 checkout = list()
 while 1:
     x = showMenu(mainMenu,startWith= 1)
+
     os.system('cls')
 
     if x == 1:   showDictionary(dicktionary, keyName='Name', attributes=['Price'])
@@ -65,14 +66,19 @@ while 1:
             if order[1] <= dicktionary[order[0]][1]:
                 print('Thank you! We will send check on your email')
                 checkout.append(order[1]*dicktionary[order[0]][0])
-                
+                dicktionary[order[0]][1] -= order[1]
                 makePrikol(order[0], checkout[-1], email)
             else:
                 print("Wrong count, try again")
         else:
             print('There are no ' + order[0])
-    elif x == 5: break
-    elif x == 6: email = input("Enter email")
+    elif x == 6: break
+    elif x == 5: 
+        total = 0
+        for check in checkout:
+            total += check
+        print("You bought items totally for ", total)
+    elif x == 7: email = input("Enter email: ")
     input("Enter any value to continue")
     os.system('cls')
 

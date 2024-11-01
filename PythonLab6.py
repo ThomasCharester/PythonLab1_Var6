@@ -6,7 +6,6 @@ def findPairCount(item, listPairs,*,start = 0):
         if item == listPairs[i]: count += 1
         i += 1
         
-    start += 1
     return count
 
 import random
@@ -17,9 +16,11 @@ for i in range(random.randint(5,30)):
 chosens = list()
 
 for item in myList:
-    if findPairCount(item) == 0:
+    if findPairCount(item, myList) == 1:
         chosens.append(item)
 
+chosens.reverse()
 cortage = tuple(chosens)
 
-print(cortage)
+print('List: ',myList)
+print('Cortage: ',cortage)
